@@ -1,0 +1,39 @@
+📌 Stage 1: Basic
+
+I created an event UserRegistered that fired when a new user signed up. ✅✅
+I created a listener SendWelcomeEmail that sent an email when the UserRegistered event was triggered.✅✅
+I registered the event & listener in the EventServiceProvider.
+I tested it by registering a new user and verified that the email was sent.
+
+📌 Stage 2: Intermediate
+
+I created an event OrderPlaced with order details.
+I added listeners:
+    SendOrderConfirmationEmail
+    NotifyAdminOrderPlaced (log/notification to admin).
+I used Queued Listeners so email/notification didn’t block the request.
+I implemented multiple listeners for the same event.
+
+📌 Stage 3: Advanced
+
+I created an event PaymentCompleted.
+I added listeners:
+    GenerateInvoicePDF (stored invoice in storage/app/invoices).
+    UpdateUserSubscription (updated subscription table).
+    SendPaymentSuccessEmail (sent email with invoice attachment).
+I used Event Subscribers instead of only listeners.
+I made listeners queueable with retry mechanism.
+I tested by simulating a payment flow.
+
+📌 Stage 4: Extra Advanced
+
+I implemented a Custom Event Dispatcher that logged all fired events into a table event_logs.
+I created an event UserDeleted with listeners:
+    SendAccountClosureEmail
+    ArchiveUserData (moved user data to archive table).
+    NotifyTeamSlack (sent Slack notification using API).
+I implemented event chaining: after PaymentCompleted event, it triggered LoyaltyPointsAwarded event.
+I used Broadcasting Events with Laravel Echo & Pusher:
+    Created ChatMessageSent event.
+    Broadcasted messages in real time to other users.
+I wrote unit tests for events & listeners to ensure proper firing.
