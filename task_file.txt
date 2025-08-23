@@ -2,17 +2,17 @@
 
 I created an event UserRegistered that fired when a new user signed up. ✅✅
 I created a listener SendWelcomeEmail that sent an email when the UserRegistered event was triggered.✅✅
-I registered the event & listener in the EventServiceProvider.
-I tested it by registering a new user and verified that the email was sent.
+I registered the event & listener in the EventServiceProvider. ✅✅
+I tested it by registering a new user and verified that the email was sent. ✅✅
 
 📌 Stage 2: Intermediate
 
-I created an event OrderPlaced with order details.
+I created an event OrderPlaced with order details. ✅✅
 I added listeners:
     SendOrderConfirmationEmail
-    NotifyAdminOrderPlaced (log/notification to admin).
-I used Queued Listeners so email/notification didn’t block the request.
-I implemented multiple listeners for the same event.
+    NotifyAdminOrderPlaced (log/notification to admin). ✅✅
+I used Queued Listeners so email/notification didn’t block the request.  ✅✅
+I implemented multiple listeners for the same event. ✅✅
 
 📌 Stage 3: Advanced
 
