@@ -16,7 +16,7 @@ I implemented multiple listeners for the same event. ✅✅
 
 📌 Stage 3: Advanced
 
-I created an event PaymentCompleted.
+I created an event PaymentCompleted. ✅✅
 I added listeners:
     GenerateInvoicePDF (stored invoice in storage/app/invoices).
     UpdateUserSubscription (updated subscription table).

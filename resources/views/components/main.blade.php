@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary px-5">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
             data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
@@ -24,16 +24,26 @@
         <div class="collapse navbar-collapse justify-content-between" id="collapsibleNavId">
             <ul class="navbar-nav me-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="users">Users</a>
+                    <a class="nav-link active" href="{{ route('users.index') }}">Users</a>
+                </li>   
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('orders.index') }}">Orders</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="orders">Orders</a>
+                    <a class="nav-link" href="{{ route('products.index') }}">Products</a>
                 </li>
             </ul>
-            <form class="d-flex my-2" action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="nav-link btn btn-danger">Logout</button>
-            </form>
+            <div class="d-flex my-2">
+                <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('products.ProductBuyList') }}">Card</a>
+                    </li>
+                </ul>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="nav-link btn btn-danger">Logout</button>
+                </form>
+            </div>
         </div>
     </nav>
     <div class="container">

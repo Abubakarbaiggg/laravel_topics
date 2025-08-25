@@ -14,7 +14,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::with(['user','product'])->where('user_id',auth()->id())->paginate(3);
         return view('orders.index', compact('orders'));
     }
 
@@ -58,7 +58,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        
     }
 
     /**
