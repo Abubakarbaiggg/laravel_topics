@@ -12,7 +12,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return view('product.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('product.create');
     }
 
     /**
@@ -28,7 +28,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $validate = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'price' => ['required', 'integer', 'min:0', 'max:999999'],
+            'stock' => ['nullable', 'integer', 'min:0', 'max:999999'],
+            'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:5120'],
+            'description' => ['nullable', 'string', 'max:1000'],
+        ]);
+        if($request->hasFile('image')){
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'),$imageName);
+            $validate['image'] = $imageName;
+        }
+        $product = Product::create($validate);
+        return redirect()->route('product.index')->with('success',"$product->name Product Created Successfully.");
     }
 
     /**
