@@ -12,7 +12,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('product.index');
+        $products = Product::all();
+        return view('product.index', compact('products'));
     }
 
     /**
@@ -28,20 +29,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-       $validate = $request->validate([
+        $validate = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'price' => ['required', 'integer', 'min:0', 'max:999999'],
             'stock' => ['nullable', 'integer', 'min:0', 'max:999999'],
             'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:5120'],
             'description' => ['nullable', 'string', 'max:1000'],
         ]);
-        if($request->hasFile('image')){
-            $imageName = time().'.'.$request->image->extension();
-            $request->image->move(public_path('images'),$imageName);
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
             $validate['image'] = $imageName;
         }
         $product = Product::create($validate);
-        return redirect()->route('product.index')->with('success',"$product->name Product Created Successfully.");
+        return redirect()->route('product.index')->with('success', "$product->name Product Created Successfully.");
     }
 
     /**
@@ -57,7 +58,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('product.edit', compact('product'));
     }
 
     /**
@@ -65,7 +66,25 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $validate = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'price' => ['required', 'integer', 'min:0', 'max:999999'],
+            'stock' => ['nullable', 'integer', 'min:0', 'max:999999'],
+            'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:5120'],
+            'description' => ['nullable', 'string', 'max:1000'],
+        ]);
+        if ($request->hasFile('image')) {
+            if ($product->image && file_exists('images/' . $product->image)) {
+                unlink(public_path('images/' . $product->image));
+            }
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $validate['image'] = $imageName;
+        } else {
+            $imageName['image'] = $product->image;
+        }
+        $product->update($validate);
+        return redirect()->route('product.index')->with('success', "$product->name Product Updated Successfully.");
     }
 
     /**
@@ -73,6 +92,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->route('product.index')->with('success', "$product->name Product Deleted Successfully.");
     }
 }
