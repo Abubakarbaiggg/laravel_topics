@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
-
+use App\Http\Controllers\PaymentController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -19,9 +19,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('order',OrderController::class);
     Route::resource('product',ProductController::class);
-    Route::get('buyproductview/{product}',[ProductController::class,'buyproductview'])->name('buyproductview');
+    // Route::get('productOrder/{product}',[ProductController::class,'productOrder'])->name('productOrder');
     Route::post('productbuy/{product}',[ProductController::class,'productbuy'])->name('productbuy');
-    Route::get('cardview',[ProductController::class,'cardview'])->name('cardview');
+    Route::get('cardview',[OrderController::class,'cardview'])->name('cardview');
+    Route::post('/payment/process', [PaymentController::class, 'process'])->name('payment.process');
+
 });
 
 require __DIR__.'/auth.php';

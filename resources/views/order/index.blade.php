@@ -22,16 +22,22 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php $i = 1 @endphp
+                                @foreach ($orders as $order)
                                 <tr class="bg-white hover:bg-gray-50">
-                                    <td class="px-6 py-4 border-b">1</td>
-                                    <td class="px-6 py-4 border-b">Abubakar</td>
-                                    <td class="px-6 py-4 border-b">Q Mobile</td>
-                                    <td class="px-6 py-4 border-b">Rs:1000</td>
-                                    <td class="px-6 py-4 border-b">5</td>
-                                    <td class="px-6 py-4 border-b">Pending</td>
+                                    <td class="px-6 py-4 border-b">{{ $i++ }}</td>
+                                    <td class="px-6 py-4 border-b">{{ $order->user->name }}</td>
+                                    <td class="px-6 py-4 border-b">{{ $order->product->name }}</td>
+                                    <td class="px-6 py-4 border-b">{{ $order->amount }}</td>
+                                    <td class="px-6 py-4 border-b">{{ $order->quantity }}</td>
+                                    <td class="px-6 py-4 border-b">{{ $order->status }}</td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
+                        <div class="mt-4">
+                            {{ $orders->links('pagination::tailwind') }}
+                        </div>
                     </div>
 
                 </div>

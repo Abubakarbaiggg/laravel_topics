@@ -1,0 +1,70 @@
+==================  Basic Tasks ==================
+
+1.Log when an order is created ✅
+
+Event: OrderCreated
+Listener: LogOrderCreated
+Action: Just write to storage/logs/laravel.log that a new order was created with its ID and user ID.
+Goal: Understand how to fire an event and attach a listener.
+
+2.Send a simple notification when payment is done
+
+Event: PaymentCompleted
+Listener: NotifyUserPayment
+Action: For now, just send a simple email using Mail::raw() to the user saying “Payment successful.”
+Goal: Learn event-driven notifications.
+
+==================  Intermediate Tasks ==================
+
+3.Update order status automatically
+
+Event: PaymentCompleted
+Listener: UpdateOrderStatus
+Action: When payment is completed, change the order’s status from pending → paid.
+Goal: Linking events to database actions.
+
+4.Send a summary email of all orders
+
+Event: OrderCreated
+Listener: SendOrderSummary
+Action: When a new order is created, send the user an email with all orders they’ve placed.
+Goal: Fetch multiple models in listener and send dynamic emails.
+
+==================  Advanced Tasks ==================
+
+5.Notify admin when large payment is done
+
+Event: PaymentCompleted
+Listener: NotifyAdminLargePayment
+Action: If the payment amount > 10,000, notify the admin via email or database notification.
+Goal: Conditional logic inside listeners.
+
+6.Queue event listeners for asynchronous processing
+
+Take any of the above listeners and make it queued.
+Goal: Learn ShouldQueue interface and async processing.
+
+==================  Extra Advanced Tasks ==================
+
+7.Trigger multiple listeners from a single event
+
+Event: OrderCreated
+Listeners:
+    Log order
+    Notify user
+    Notify admin
+Goal: Practice multiple listeners per event.
+
+8.Real-time notification with broadcasting
+
+Event: PaymentCompleted
+Listener: BroadcastPaymentNotification
+Action: Broadcast the payment info to a Laravel Echo channel to show a real-time update on the frontend card.
+Goal: Combine events + broadcasting + frontend (Livewire/JS).
+
+9.Custom events with data transformation
+
+Event: OrderUpdated
+Listener: UpdateAnalytics
+Action: Update a statistics table (total orders, revenue, average payment) whenever an order is created or updated.
+Goal: Practice advanced data manipulation in listeners.

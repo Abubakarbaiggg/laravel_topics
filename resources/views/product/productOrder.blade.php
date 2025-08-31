@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Buy Product') }}
+                {{ __('Product Order') }}
             </h2>
             <div>
                 <a href="{{ route('product.index') }}"
@@ -32,10 +32,10 @@
                         <p class="text-lg font-semibold text-green-700">💲 {{ number_format($product->price) }}</p>
                         <p class="text-sm text-gray-500">Stock Available: {{ $product->stock }}</p>
                     </div>
-
                     <!-- Buy Form -->
                         <form action="{{ route('order.store') }}" method="POST" class="mt-4">
                         @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <input type="hidden" name="product_amount" value="{{ $product->price }}">
                         <div class="flex gap-6 mb-4">
                             <!-- Quantity Input -->

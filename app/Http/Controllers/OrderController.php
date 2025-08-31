@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
+use App\Events\OrderCreated;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -12,7 +15,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('order');
+        $orders = Order::with(['product','user'])->orderby('id','desc')->paginate(5);
+        return view('order.index',compact('orders'));
     }
 
     /**
@@ -20,23 +24,32 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request,Product $product)
     {
-        //
+        $order = Order::create([
+            'user_id' => auth()->id(),
+            'product_id' => $request->product_id,
+            'amount' => $request->product_amount,
+            'quantity' => $request->quantity,
+            'status' => $request->status
+        ]);
+        event(new OrderCreated($order));
+        return redirect()->route('product.index')->with('success',"$product->name Product Has Been Buy.");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show(int $id)
     {
-        //
+        $product = Product::findOrFail($id)->where('id',$id)->get();
+        dd($product);
+
     }
 
     /**
@@ -44,7 +57,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        return view('order.edit',compact($order));
     }
 
     /**
@@ -60,6 +73,15 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+        return redirect()->route('cardview')->with('success', "Order Deleted Successfully.");
+    }
+
+      public function cardview(){
+        $orders = Order::with('product')->where('user_id',auth()->id())->orderby('id','desc')->paginate(5);
+        $total_price = Order::where('user_id',auth()->id())
+                  ->join('products','products.id','=','orders.product_id')
+                  ->selectRaw('SUM(products.price * orders.quantity) as total')->value('total');
+        return view('product.card',compact('orders','total_price'));
     }
 }

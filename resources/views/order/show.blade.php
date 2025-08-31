@@ -20,29 +20,28 @@
 
                 <!-- Product Image -->
                 <div class="h-64 w-full bg-cover bg-center rounded-t-xl"
-                    style="background-image: url('{{ asset('images/' . $product->image) }}')">
+                    style="background-image: url('{{ asset('images/' . $order->image) }}')">
                 </div>
 
                 <!-- Product Details -->
                 <div class="p-6">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">{{ $product->name }}</h3>
-                    <p class="text-gray-700 text-base mb-4">{{ $product->description }}</p>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">{{ $order->name }}</h3>
+                    <p class="text-gray-700 text-base mb-4">{{ $order->description }}</p>
 
                     <div class="flex justify-between items-center mb-4">
-                        <p class="text-lg font-semibold text-green-700">💲 {{ number_format($product->price) }}</p>
-                        <p class="text-sm text-gray-500">Stock Available: {{ $product->stock }}</p>
+                        <p class="text-lg font-semibold text-green-700">💲 {{ number_format($order->price) }}</p>
+                        <p class="text-sm text-gray-500">Stock Available: {{ $order->stock }}</p>
                     </div>
-
                     <!-- Buy Form -->
                         <form action="{{ route('order.store') }}" method="POST" class="mt-4">
                         @csrf
-                        <input type="hidden" name="product_amount" value="{{ $product->price }}">
+                        <input type="hidden" name="product_amount" value="{{ $order->price }}">
                         <div class="flex gap-6 mb-4">
                             <!-- Quantity Input -->
                             <div>
                                 <label for="quantity" class="block text-sm font-medium text-gray-700">Select Quantity</label>
                                 <input type="number" name="quantity" id="quantity" min="1"
-                                    max="{{ $product->stock }}" value="1"
+                                    max="{{ $order->stock }}" value="1"
                                     class="mt-1 block w-28 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             </div>
 
