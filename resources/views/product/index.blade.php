@@ -2,7 +2,7 @@
         <x-slot name="header">
             <div class="flex justify-between items-center">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Product') }}
+                    {{ __('Products') }}
                 </h2>
                 <div>
                     <a href="{{ route('product.create') }}"
@@ -18,6 +18,12 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <div class="overflow-x-auto">
+                            @if (session('success'))
+                                <div class="p-4 mb-4 text-sm text-green-700 bg-white border border-green-300 rounded-lg shadow-sm"
+                                    role="alert">
+                                    <span class="font-medium">{{ session('success') }}</span>
+                                </div>
+                            @endif
                             <table class="w-full text-sm text-left border border-gray-200 shadow-md rounded-lg">
                                 <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
                                     <tr>
@@ -34,7 +40,7 @@
                                     @php $i = 1; @endphp
                                     @foreach ($products as $product)
                                         <tr class="bg-white hover:bg-gray-50">
-                                            <td class="px-6 py-4 border-b">{{$i++}}</td>
+                                            <td class="px-6 py-4 border-b">{{ $i++ }}</td>
                                             <td class="px-6 py-4 border-b"><img
                                                     src="{{ asset('images/' . $product->image) }}" width="70px"
                                                     height="70px"></td>
@@ -44,19 +50,20 @@
                                             <td class="px-6 py-4 border-b">{{ $product->description }}</td>
                                             <td class="px-6 py-4 border-b">
                                                 <div class="flex justify-center space-x-2">
-                                                    <button
+                                                    <a href="{{ route('buyproductview',$product->id) }}"
                                                         class="bg-transparent hover:bg-teal-500 text-teal-700 hover:text-white font-semibold py-2 px-4 border border-teal-500 hover:border-transparent rounded">
                                                         <i class="fa-solid fa-cart-shopping"></i>
-                                                    </button>
-                                                    <button
+                                                    </a>
+                                                    <a href="{{ route('product.show', $product->id) }}"
                                                         class="bg-transparent hover:bg-slate-500 text-slate-700 hover:text-white font-semibold py-2 px-4 border border-slate-500 hover:border-transparent rounded">
                                                         <i class="fa-solid fa-eye"></i>
-                                                    </button>
+                                                    </a>
                                                     <a href="{{ route('product.edit', $product->id) }}"
                                                         class="bg-transparent hover:bg-neutral-500 text-neutral-700  hover:text-white py-2 px-4 border border-neutral-500 hover:border-transparent rounded">
                                                         <i class="fa-solid fa-pen-to-square"></i>
                                                     </a>
-                                                    <form action="{{ route('product.destroy', $product->id) }}" method="post">
+                                                    <form action="{{ route('product.destroy', $product->id) }}"
+                                                        method="post">
                                                         @method('DELETE')
                                                         @csrf
                                                         <button

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -50,7 +51,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('product.show',compact('product'));
     }
 
     /**
@@ -94,5 +95,24 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->route('product.index')->with('success', "$product->name Product Deleted Successfully.");
+    }
+    public function buyproductview(Product $product){
+        return view('product.buy',compact('product'));
+    }
+    public function productbuy(Request $request,Product $product){
+        Order::create([
+            'user_id' => auth()->id(),
+            'product_id' => $product->id,
+            'amount' => $request->product_amount,
+            'quantity' => $request->quantity,
+            'status' => $request->status
+        ]);
+        return redirect()->route('product.index')->with('success',"$product->name Product Has Been Buy.");
+    }
+    public function cardview(){
+        $orders = Order::with('product')->where('user_id',auth()->id())->get();
+        $total_price = Order::where('user_id',auth()->id())
+                  ->join('products','products.id','=','orders.product_id')->sum('products.price');
+        return view('product.card',compact('orders','total_price'));
     }
 }

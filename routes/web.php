@@ -19,6 +19,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('order',OrderController::class);
     Route::resource('product',ProductController::class);
+    Route::get('buyproductview/{product}',[ProductController::class,'buyproductview'])->name('buyproductview');
+    Route::post('productbuy/{product}',[ProductController::class,'productbuy'])->name('productbuy');
+    Route::get('cardview',[ProductController::class,'cardview'])->name('cardview');
 });
 
 require __DIR__.'/auth.php';
