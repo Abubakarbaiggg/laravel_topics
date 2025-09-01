@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderDeleted;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -15,7 +16,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with(['product','user'])->orderby('id','desc')->paginate(5);
+        $orders = Order::with(['product','user'])->where('status','Completed')->orderby('id','desc')->paginate(5);
         return view('order.index',compact('orders'));
     }
 
@@ -31,10 +32,9 @@ class OrderController extends Controller
      */
     public function store(Request $request,Product $product)
     {
-        $order = Order::create([
+        $order = Order::with('product')->create([
             'user_id' => auth()->id(),
             'product_id' => $request->product_id,
-            'amount' => $request->product_amount,
             'quantity' => $request->quantity,
             'status' => $request->status
         ]);
@@ -47,9 +47,8 @@ class OrderController extends Controller
      */
     public function show(int $id)
     {
-        $product = Product::findOrFail($id)->where('id',$id)->get();
-        dd($product);
-
+        $product = Product::findOrFail($id)->where('id',$id)->first();
+        return view('order.create',compact('product'));
     }
 
     /**
@@ -57,7 +56,8 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        return view('order.edit',compact($order));
+        $order->with('product')->first();
+        return view('order.edit',compact('order'));
     }
 
     /**
@@ -65,7 +65,13 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        $order = Order::with('product')->create([
+            'user_id' => auth()->id(),
+            'product_id' => $request->product_id,
+            'quantity' => $request->quantity,
+            'status' => $request->status
+        ]);
+        // event(new ());
     }
 
     /**
@@ -73,11 +79,12 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
+        event(new OrderDeleted($order));
         $order->delete();
         return redirect()->route('cardview')->with('success', "Order Deleted Successfully.");
     }
 
-      public function cardview(){
+    public function cardview(){
         $orders = Order::with('product')->where('user_id',auth()->id())->orderby('id','desc')->paginate(5);
         $total_price = Order::where('user_id',auth()->id())
                   ->join('products','products.id','=','orders.product_id')
@@ -85,3 +92,6 @@ class OrderController extends Controller
         return view('product.card',compact('orders','total_price'));
     }
 }
+
+
+

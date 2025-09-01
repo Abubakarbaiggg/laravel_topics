@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\Order;
 
 class PaymentController extends Controller
 {
     public function process(Request $request){
-        dd($request->all());
+        $order = Order::where('user_id',auth()->id())->selectRaw()->get();
+        dd($order);        
     }
     public function processBkp(Request $request)
     {

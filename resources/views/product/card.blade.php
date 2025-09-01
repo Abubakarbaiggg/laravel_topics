@@ -105,10 +105,11 @@
                                 </div>
                             </form> --}}
                             <form action="{{ route('payment.process') }}" method="POST" class="flex items-end gap-4 mt-4">
+                                @csrf
                                 <div class="flex-1">
                                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Total
                                         Price</label>
-                                    <input type="text" name="name" id="name" value="{{ $total_price }}"
+                                    <input type="text" name="price" id="name" value="{{ $total_price }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         placeholder="Enter product name" required readonly>
                                 </div>

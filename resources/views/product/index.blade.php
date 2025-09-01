@@ -46,11 +46,10 @@
                                                     height="70px"></td>
                                             <td class="px-6 py-4 border-b">{{ $product->name }}</td>
                                             <td class="px-6 py-4 border-b">{{ $product->price }}</td>
-                                            <td class="px-6 py-4 border-b">{{ $product->price }}</td>
+                                            <td class="px-6 py-4 border-b">{{ $product->stock }}</td>
                                             <td class="px-6 py-4 border-b">{{ $product->description }}</td>
                                             <td class="px-6 py-4 border-b">
                                                 <div class="flex justify-center space-x-2">
-                                                    {{-- <a href="{{ route('productOrder',$product->id) }}" --}}
                                                     <a href="{{ route('order.show',$product->id) }}"
                                                         class="bg-transparent hover:bg-teal-500 text-teal-700 hover:text-white font-semibold py-2 px-4 border border-teal-500 hover:border-transparent rounded">
                                                         <i class="fa-solid fa-cart-shopping"></i>

@@ -12,7 +12,6 @@
             </div>
         </div>
     </x-slot>
-
     <div class="py-12">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div
@@ -20,7 +19,7 @@
 
                 <!-- Product Image -->
                 <div class="h-64 w-full bg-cover bg-center rounded-t-xl"
-                    style="background-image: url('{{ asset('images/' . $product->image) }}')">
+                    style="background-image: url('{{ asset('images/'.$product->image) }}')">
                 </div>
 
                 <!-- Product Details -->
@@ -51,8 +50,8 @@
                                 <label for="status" class="block text-sm font-medium text-gray-700">Product Status</label>
                                 <select name="status" id="status"
                                     class="mt-1 block w-32 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                                    <option value="Completed">Completed</option>
-                                    <option value="Pending">Pending</option>
+                                    <option value="Purchase">Purchase</option>
+                                    <option value="Parchase">Pending</option>
                                 </select>
                             </div>
                         </div>

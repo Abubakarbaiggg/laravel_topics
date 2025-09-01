@@ -19,7 +19,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('order',OrderController::class);
     Route::resource('product',ProductController::class);
-    // Route::get('productOrder/{product}',[ProductController::class,'productOrder'])->name('productOrder');
     Route::post('productbuy/{product}',[ProductController::class,'productbuy'])->name('productbuy');
     Route::get('cardview',[OrderController::class,'cardview'])->name('cardview');
     Route::post('/payment/process', [PaymentController::class, 'process'])->name('payment.process');

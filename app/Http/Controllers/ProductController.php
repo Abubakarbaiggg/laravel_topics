@@ -106,10 +106,4 @@ class ProductController extends Controller
         ]);
         return redirect()->route('product.index')->with('success',"$product->name Product Has Been Buy.");
     }
-
-    // public function productOrder(Product $product){
-    //     return view('product.productOrder',compact('product'));
-    // }
-
-
 }

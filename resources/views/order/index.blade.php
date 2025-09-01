@@ -19,6 +19,7 @@
                                     <th class="px-6 py-3 border-b">Amount</th>
                                     <th class="px-6 py-3 border-b">Qunatity</th>
                                     <th class="px-6 py-3 border-b">Status</th>
+                                    <th class="px-6 py-3 border-b">Total Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,6 +32,7 @@
                                     <td class="px-6 py-4 border-b">{{ $order->amount }}</td>
                                     <td class="px-6 py-4 border-b">{{ $order->quantity }}</td>
                                     <td class="px-6 py-4 border-b">{{ $order->status }}</td>
+                                    <td class="px-6 py-4 border-b">{{ number_format($order->amount * $order->quantity,2,'.',',')}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
