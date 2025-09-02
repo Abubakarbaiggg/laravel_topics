@@ -30,6 +30,7 @@
                     <div class="flex justify-between items-center mb-4">
                         <p class="text-lg font-semibold text-green-700">💲 {{ number_format($order->product->price) }}
                         </p>
+                        <p class="text-sm text-gray-500">Your Order:</p>
                         <p class="text-sm text-gray-500">Stock Available: {{ $order->product->stock }}</p>
                     </div>
                     <!-- Buy Form -->
@@ -38,13 +39,13 @@
                         @method('PUT')
                         <input type="hidden" name="product_id" value="{{ $order->product->id }}">
                         <input type="hidden" name="product_amount" value="{{ $order->product->price }}">
+                        <input type="hidden" name="old_quantity" value="{{ $order->quantity }}">
                         <div class="flex gap-6 mb-4">
                             <!-- Quantity Input -->
                             <div>
-                                <label for="quantity" class="block text-sm font-medium text-gray-700">Select
-                                    Quantity</label>
-                                <input type="number" name="quantity" id="quantity" min="1"
-                                    max="{{ $order->product->stock }}" value="1"
+                                <label for="quantity" class="block text-sm font-medium text-gray-700">Select Quantity</label>
+                                <input type="number" name="quantity" id="quantity" value=" {{ $order->quantity }}"
+                                    max="{{ $order->product->stock }}"  
                                     class="mt-1 block w-28 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             </div>
 
