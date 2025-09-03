@@ -9,8 +9,14 @@ use App\Models\Order;
 class PaymentController extends Controller
 {
     public function process(Request $request){
-        $order = Order::where('user_id',auth()->id())->selectRaw()->get();
-        dd($order);        
+        try{
+        $order = Order::with('product')->where('user_id',auth()->id())->where('status','Purchase')->get();
+        $productPrice = $order->product->price ;
+        $productStock = $order->product->stock ;
+        dd([$productPrice,$productStock]);
+        }catch(\Exception $exception){
+            dd($exception);
+        }
     }
     public function processBkp(Request $request)
     {

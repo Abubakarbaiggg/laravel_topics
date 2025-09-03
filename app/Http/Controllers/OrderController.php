@@ -65,17 +65,10 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        $quantity = $request->quantity;
-        $old_quantity = $request->old_quantity;
-        if ($quantity > $old_quantity) {
-            Order::where('id', $order->id)->increment('quantity', $quantity);
-        } else {
-            $stock = $old_quantity - $quantity;
-            Order::where('id', $order->id)->decrement('quantity', $stock);
-        }
         $order->update([
             'user_id' => auth()->id(),
             'product_id' => $request->product_id,
+            'quantity' => $request->quantity,
             'status' => $request->status
         ]);
         return redirect()->route('cardview')->with('success', "Order Has Been Updated Successfully.");
@@ -99,6 +92,5 @@ class OrderController extends Controller
         return view('product.card', compact('orders', 'total_price'));
     }
 }
-
 
 
