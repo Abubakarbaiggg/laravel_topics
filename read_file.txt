@@ -13,7 +13,7 @@
     o	Action: User ko email bhejna: “Payment successful for Order #ID.”
     o	Goal: Basic user communication.
 ________________________________________
-🔹 Intermediate Tasks
+🔹 Intermediate Tasks  ✅
 3.	Payment Completed → Update Order Status
     o	Event: PaymentCompleted
     o	Listener: UpdateOrderStatus

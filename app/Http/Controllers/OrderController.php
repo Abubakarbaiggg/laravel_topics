@@ -17,7 +17,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with(['product', 'user'])->where('status', 'Completed')->orderby('id', 'desc')->paginate(5);
+        $orders = Order::with(['product', 'user'])->where('status', 'Completed')->orderby('id', 'desc')->get();
+        dd($orders);
         return view('order.index', compact('orders'));
     }
 
@@ -85,7 +86,8 @@ class OrderController extends Controller
 
     public function cardview()
     {
-        $orders = Order::with('product')->where('user_id', auth()->id())->orderby('id', 'desc')->paginate(5);
+        $orders = Order::with('product')->where('user_id', auth()->id())
+                  ->where('status','!=','Completed')->orderby('id', 'desc')->paginate(5);
         $total_price = Order::where('user_id', auth()->id())
             ->join('products', 'products.id', '=', 'orders.product_id')
             ->selectRaw('SUM(products.price * orders.quantity) as total')->value('total');

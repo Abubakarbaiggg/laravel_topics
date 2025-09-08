@@ -9,19 +9,18 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Order;
-class OrderCreated
+
+class PaymentCompleted
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-
-    public $order;
-    public function __construct(Order $order)
+    public $result;
+    public function __construct($result)
     {
-        $this->order = $order;
+        $this->result = $result;
     }
 
     /**

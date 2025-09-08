@@ -5,17 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
+use App\Events\PaymentCompleted;
 
 class PaymentController extends Controller
 {
     public function process(Request $request){
         try{
-        $order = Order::with('product')->where('user_id',auth()->id())->where('status','Purchase')->get();
-        $productPrice = $order->product->price ;
-        $productStock = $order->product->stock ;
-        dd([$productPrice,$productStock]);
-        }catch(\Exception $exception){
-            dd($exception);
+        $orders = Order::with('product')->where('user_id',auth()->id())->where('status','Purchase')->get();
+        $result = $orders->groupBy('product_id')->map(function($group){
+            return [
+                 'product_id' => $group->first()->product_id,
+                 'product' => $group->first()->product->name,
+                 'quantity' => $group->sum('quantity'),
+                 'totalPrice' => $group->sum(function($order){
+                    return $order->quantity * $order->product->price;
+                 })
+            ];
+        })->toArray();
+        event(new PaymentCompleted($result));
+        }catch(\Exception $e){
+            \Log::error("Process error:". $e->getMessage());
         }
     }
     public function processBkp(Request $request)
