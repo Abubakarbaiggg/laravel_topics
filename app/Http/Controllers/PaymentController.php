@@ -23,6 +23,7 @@ class PaymentController extends Controller
             ];
         })->toArray();
         event(new PaymentCompleted($result));
+        return redirect()->route('cardview')->with('success', "Payment Has Been Successfully Completed.");
         }catch(\Exception $e){
             \Log::error("Process error:". $e->getMessage());
         }

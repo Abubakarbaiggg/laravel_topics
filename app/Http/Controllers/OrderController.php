@@ -17,8 +17,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with(['product', 'user'])->where('status', 'Completed')->orderby('id', 'desc')->get();
-        dd($orders);
+        $orders = Order::with(['product', 'user'])->where('status', 'Completed')->orderby('id', 'desc')->paginate(5);
         return view('order.index', compact('orders'));
     }
 

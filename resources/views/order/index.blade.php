@@ -29,10 +29,10 @@
                                     <td class="px-6 py-4 border-b">{{ $i++ }}</td>
                                     <td class="px-6 py-4 border-b">{{ $order->user->name }}</td>
                                     <td class="px-6 py-4 border-b">{{ $order->product->name }}</td>
-                                    <td class="px-6 py-4 border-b">{{ $order->amount }}</td>
+                                    <td class="px-6 py-4 border-b">{{ $order->product->price }}</td>
                                     <td class="px-6 py-4 border-b">{{ $order->quantity }}</td>
                                     <td class="px-6 py-4 border-b">{{ $order->status }}</td>
-                                    <td class="px-6 py-4 border-b">{{ number_format($order->amount * $order->quantity,2,'.',',')}}</td>
+                                    <td class="px-6 py-4 border-b">{{ number_format($order->product->price * $order->quantity,2,'.',',')}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
