@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OrderController;
@@ -22,6 +24,8 @@ Route::middleware('auth')->group(function () {
     Route::post('productbuy/{product}',[ProductController::class,'productbuy'])->name('productbuy');
     Route::get('cardview',[OrderController::class,'cardview'])->name('cardview');
     Route::post('/payment/process', [PaymentController::class, 'process'])->name('payment.process');
+    Route::resource('role',RoleController::class);
+    Route::resource('permission',PermissionController::class);
 
 });
 
